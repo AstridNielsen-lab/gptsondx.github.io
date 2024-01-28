@@ -1,5 +1,6 @@
 import can
-import time
+
+print("Iniciando o script")
 
 frequencias_detectadas = []
 
@@ -13,7 +14,8 @@ def callback(pkt):
             print(f"Frequência detectada: {frequencia} MHz")
 
 def escanear_frequencias():
-    bus = can.interface.Bus(channel='can0', bustype='socketcan')
+    print("Entrando na funcao escanear_frequencias")
+    bus = can.interface.Bus(channel='vcan0', bustype='virtual')
 
     try:
         while True:
@@ -23,7 +25,8 @@ def escanear_frequencias():
                 frequencia = message.arbitration_id
                 print(f"Frequência detectada: {frequencia} MHz")
     except KeyboardInterrupt:
-        pass
+        print("Saindo da função escanear_frequencias")
 
 if __name__ == "__main__":
+    print("Iniciando o script principal")
     escanear_frequencias()

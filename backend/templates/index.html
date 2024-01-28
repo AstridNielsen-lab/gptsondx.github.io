@@ -3,15 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minha Página</title>
+    <title>Rastreador de Frequências</title>
+    <style>
+        /* Adicione um estilo simples para a caixa de informações */
+        #informacoes-box {
+            border: 1px solid #ccc;
+            padding: 10px;
+            max-height: 300px; /* Defina a altura máxima para rolar as informações */
+            overflow-y: auto; /* Adicione rolagem vertical se necessário */
+        }
+    </style>
 </head>
 <body>
-    <h1>Bem-vindo à Minha Página</h1>
-    <p>As frequências detectadas são:</p>
-    <ul>
-        {% for frequencia in frequencias %}
-            <li>{{ frequencia }}</li>
-        {% endfor %}
-    </ul>
+
+    <h1>Rastreador de Frequências</h1>
+
+    <button onclick="escanear()">Escanear Frequências</button>
+    <button onclick="parar()">Parar Rastreamento</button>
+
+    <h2>Informações Escaneadas:</h2>
+    <!-- Adicione uma caixa para exibir as informações -->
+    <div id="informacoes-box"></div>
+
+    <script>
+        // Função para iniciar o escaneamento
+        function escanear() {
+            fetch('/escanear')
+                .then(response => response.json())
+                .then(data => console.log(data));
+        }
+
+        // Função para parar o rastreamento
+        function parar() {
+            fetch('/parar')
+                .then(response => response.json())
+                .then(data => console.log(data));
+        }
+
+        // Função para atualizar as informações escaneadas
+        function atualizarInformacoes() {
+            fetch('/informacoes')
+                .then(response => response.json())
+                .then(data => {
+                    const informacoesBox = document.getElementById('informacoes-box');
+                    informacoesBox.innerHTML = '';
+
+                    data.informacoes.forEach(info => {
+                        const p = document.createElement('p');
+                        p.textContent = info;
+                        informacoesBox.appendChild(p);
+                    });
+                });
+        }
+
+        // Adicione esta linha para chamar a função de atualização ao carregar a página
+        atualizarInformacoes();
+
+        setInterval(atualizarInformacoes, 1000);  // Atualizar a lista a cada segundo
+    </script>
+
 </body>
 </html>
