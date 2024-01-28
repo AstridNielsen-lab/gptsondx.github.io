@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Página</title>
+</head>
+<body>
+    <h1>Bem-vindo à Minha Página</h1>
+    <p>As frequências detectadas são:</p>
+    <ul>
+        {% for frequencia in frequencias %}
+            <li>{{ frequencia }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
